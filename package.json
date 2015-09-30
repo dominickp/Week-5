@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/dominickp/Week-5/issues"
   },
-  "homepage": "https://github.com/dominickp/Week-5"
+  "homepage": "https://github.com/dominickp/Week-5",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
 }
