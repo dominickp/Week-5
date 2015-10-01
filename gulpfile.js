@@ -3,6 +3,8 @@ var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var Server = require('karma').Server;
+var minifyCss = require('gulp-minify-css');
+
 
 // can run 'gulp build'
 gulp.task('buildApp', function () {
@@ -19,7 +21,14 @@ gulp.task('buildVendor', function () {
         .pipe(gulp.dest('bist'));
 });
 
-gulp.task('build', ['buildApp', 'buildVendor']);
+gulp.task('buildCss', function () {
+    gulp.src('./css/*.css')
+        .pipe(concat('styles.css'))
+        .pipe(minifyCss())
+        .pipe(gulp.dest('bist'));
+});
+
+gulp.task('build', ['buildApp', 'buildVendor', 'buildCss']);
 
 gulp.task('test', ['jshint', 'karma']);
 
@@ -36,5 +45,9 @@ gulp.task('karma', function (done) {
     }, done).start();
 });
 
-gulp.task('default', ['build', 'jshint']);
+gulp.task('watch', function(){
+    gulp.watch('./js/**/*.js', ['build', 'test']);
+});
+
+gulp.task('default', ['build', 'test', 'watch']);
 
